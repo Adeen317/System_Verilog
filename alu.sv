@@ -11,13 +11,15 @@ module alu (
   define_type  OP_ADD = 0;
   define_type  OP_SUB = 1;
   define_type  OP_SLL = 2;
-  define_type  OP_SRL = 3;
+  define_type  OP_SRA = 3;
   define_type  OP_AND = 4;
   define_type  OP_OR  = 5;
   define_type  OP_XOR = 6;
   define_type  OP_EQL = 7;
   define_type  OP_LESSEQL=8;
   define_type  OP_GREQL=9;
+  define_type  OP_NEQL=10;
+  define_type  OP_JAL_JALR=31;
 
   logic a=0;
 
@@ -26,7 +28,7 @@ module alu (
   endfunction
   
   always_comb begin
-    alu_o=(op_i==OP_ADD)?a_i+ b_i:(op_i==OP_SUB)?a_i-b_i:(op_i==OP_SLL)?a_i[7:0]<<b_i[2:0]:(op_i==OP_SRL)?a_i[7:0]>>b_i[2:0]:(op_i==OP_AND)?a_i[7:0]&b_i[7:0]:(op_i==OP_OR)?a_i | b_i:(op_i==OP_XOR)?a_i ^ b_i:(op_i==OP_EQL)?{7'h0, a_i == b_i}:(op_i==OP_LESSEQL)?{7'h0, a_i <= b_i}:(op_i==OP_GREQL)?{7'h0, a_i >= b_i}:a;
+    alu_o=(op_i==OP_ADD)?a_i+ b_i:(op_i==OP_SUB)?a_i-b_i:(op_i==OP_SLL)?a_i[7:0]<<b_i[2:0]:(op_i==OP_SRA)?a_i[7:0]>>>b_i[2:0]:(op_i==OP_AND)?a_i[7:0]&b_i[7:0]:(op_i==OP_OR)?a_i | b_i:(op_i==OP_XOR)?a_i ^ b_i:(op_i==OP_EQL)?{7'h0, a_i == b_i}:(op_i==OP_LESSEQL)?{7'h0, a_i <= b_i}:(op_i==OP_GREQL)?{7'h0, a_i >= b_i}:(op_i==OP_NEQL)?{7'h0, a_i != b_i}:(op_i==OP_JAL_JALR)?a_i:a;
     print();
     
   end
@@ -47,7 +49,7 @@ module alu_tb ();
   end
   initial begin
     for (int j =0; j<2; j++) begin
-      for (int i =0; i<31; i++) begin
+      for (int i =0; i<=31; i++) begin
         a_i =32'(i+1);
         b_i = 32'(i);
         op_i = 5'(i);
