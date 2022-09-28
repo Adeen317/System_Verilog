@@ -1,17 +1,18 @@
+typedef logic [3:0] count;
 module bcd_te (
   input logic [3:0] in,
   output logic  a,b,c,d,e,f,g);
 
-  localparam Zero = 4'b0000;
-  localparam One = 4'b0001;
-  localparam Two = 4'b0010;
-  localparam Three= 4'b0011;
-  localparam Four = 4'b0100;
-  localparam Five = 4'b0101;
-  localparam Six = 4'b0110;
-  localparam Seven= 4'b0111;
-  localparam Eight= 4'b1000;
-  localparam Nine= 4'b1001;
+  count Zero = 0;
+  count One =  1;
+  count Two =  2;
+  count Three= 3;
+  count Four = 4;
+  count Five = 5;
+  count Six =  6;
+  count Seven= 7;
+  count Eight= 8;
+  count Nine=  9;
 always_comb begin
     case (in)
       Zero: begin a=1;b=1;c=1;d=1;e=1;f=1;g=0;end
