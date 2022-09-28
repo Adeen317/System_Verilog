@@ -16,7 +16,8 @@ module alu (
   define_type  OP_OR  = 5;
   define_type  OP_XOR = 6;
   define_type  OP_EQL = 7;
-
+  define_type  OP_LESSEQL=8;
+  define_type  OP_GREQL=9;
 
   logic a=0;
 
@@ -25,7 +26,7 @@ module alu (
   endfunction
   
   always_comb begin
-    alu_o=(op_i==OP_ADD)?a_i+ b_i:(op_i==OP_SUB)?a_i-b_i:(op_i==OP_SLL)?a_i[7:0]<<b_i[2:0]:(op_i==OP_SRL)?a_i[7:0]>>b_i[2:0]:(op_i==OP_AND)?a_i[7:0]&b_i[7:0]:(op_i==OP_OR)?a_i | b_i:(op_i==OP_XOR)?a_i ^ b_i:(op_i==OP_EQL)?{7'h0, a_i == b_i}:a;
+    alu_o=(op_i==OP_ADD)?a_i+ b_i:(op_i==OP_SUB)?a_i-b_i:(op_i==OP_SLL)?a_i[7:0]<<b_i[2:0]:(op_i==OP_SRL)?a_i[7:0]>>b_i[2:0]:(op_i==OP_AND)?a_i[7:0]&b_i[7:0]:(op_i==OP_OR)?a_i | b_i:(op_i==OP_XOR)?a_i ^ b_i:(op_i==OP_EQL)?{7'h0, a_i == b_i}:(op_i==OP_LESSEQL)?{7'h0, a_i <= b_i}:(op_i==OP_GREQL)?{7'h0, a_i >= b_i}:a;
     print();
     
   end
